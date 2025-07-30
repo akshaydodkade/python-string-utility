@@ -27,7 +27,7 @@ class TestExpander(unittest.TestCase):
     self.assertEqual(self.string_expander.expand(" , , , "), [])
 
   # test leading or traling whitespace around data
-  def test_empty_string(self):
+  def test_whitespace_string(self):
     self.assertEqual(self.string_expander.expand(" 2, 3 - 4,   5, ,"), [2, 3, 4, 5])
 
   # test delimiters from config.py
@@ -49,6 +49,19 @@ class TestExpander(unittest.TestCase):
     expander = StringExpander(delimiters=["*"])
     with self.assertRaises(ValueError):
       expander.expand("1-2")
+
+  # test reverse range expand
+  def test_reverse_range(self):
+    self.assertEqual(self.string_expander.expand("5-3"), [5, 4, 3])
+
+  # test single number range
+  def test_single_number_range(self):
+    self.assertEqual(self.string_expander.expand("5-5"), [5])
+
+  # test of validation of numeric value
+  def test_numeric_validation(self):
+    with self.assertRaises(ValueError):
+      self.string_expander.expand("6-t")
 
 if __name__ == '__main__':
   unittest.main()
