@@ -8,7 +8,9 @@ class StringExpander:
       return []
     
     result = []
-    segments = input.split(",")
+
+    # clean whitespace and empty strings
+    segments = [s.strip() for s in input.split(",") if s.strip()]
 
     for segment in segments:
       # check for "-" dash to extend integer
@@ -24,5 +26,5 @@ class StringExpander:
 
 if __name__ == '__main__':
   e = StringExpander
-  input = "1-0,4"
+  input = " , 1 -3 , ,5 "
   print(e.expand(e, input))
